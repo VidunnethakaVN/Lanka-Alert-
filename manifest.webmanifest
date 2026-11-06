@@ -1,0 +1,19 @@
+{
+  "name": "LankaAlert V3.4 · දැනුවත් වන්න · ආරක්ෂිත වන්න",
+  "short_name": "LankaAlert",
+  "description": "Sri Lanka safety preview with weather outlook, alerts, river gauges, community reports and preparedness tools.",
+  "lang": "si-LK",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f7fa",
+  "theme_color": "#071b32",
+  "icons": [
+    {
+      "src": "assets/lankaalert-logo.webp",
+      "sizes": "1024x1024",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}

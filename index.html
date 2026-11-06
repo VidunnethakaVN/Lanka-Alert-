@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="si">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071b32">
+  <meta name="description" content="LankaAlert ශ්‍රී ලංකාවේ ආපදා ආරක්ෂාව සඳහා ප්‍රජා යෙදුම් පෙරදසුනකි.">
+  <meta name="application-name" content="LankaAlert V3.4">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <title>LankaAlert V3.4 · දැනුවත් වන්න · ආරක්ෂිත වන්න</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stage">
+    <p class="stage-caption" data-i18n="stageCaption">A community-powered safety network · Sri Lanka</p>
+    <div class="phone" aria-label="LankaAlert mobile application">
+      <div class="screen" id="screen">
+        <div class="notch" aria-hidden="true"></div>
+        <div class="statusbar"><span id="clock">9:41</span><span aria-label="Mobile signal, Wi-Fi and battery">● ◔ ▰</span></div>
+        <header class="app-header">
+          <a class="brand" href="#home" aria-label="LankaAlert home" data-nav="home">
+            <img class="brand-mark" src="assets/lankaalert-logo.webp" alt="LankaAlert ආරක්ෂක ලාංඡනය" data-i18n-alt="logoAlt">
+            <span><strong>Lanka<span>Alert</span></strong><small data-i18n="tagline">STAY INFORMED · STAY SAFE</small></span>
+          </a>
+          <button class="icon-button header-icon-button notification-button" id="notifications" data-nav="alerts" type="button" aria-label="Notifications" title="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-2.5 7-2.5 8.5h17C20.5 16 18 16 18 9ZM10 21h4"></path></svg><i></i></button>
+        </header>
+
+        <main class="content" id="content" tabindex="-1">
+          <section class="view active" id="home" aria-labelledby="homeTitle">
+            <div class="welcome-row">
+              <div><p class="eyebrow" data-i18n="todayLabel">TODAY · SRI LANKA</p><h1 id="homeTitle"><span data-i18n="goodDay">Stay prepared,</span><br><span class="welcome-name" id="welcomeName" data-i18n="there">everyone</span> <span aria-hidden="true"></span></h1></div>
+              <button class="district-chip" id="districtChip" type="button">⌖ <span data-i18n="colombo">Colombo</span>⌄</button>
+            </div>
+            <section class="smart-safety-card" aria-labelledby="smartSafetyTitle">
+              <div class="smart-safety-title"><div><p class="eyebrow" data-i18n="smartSafety">SMART SAFETY CENTER</p><h2 id="smartSafetyTitle" data-i18n="safetyAtGlance">Your safety at a glance</h2></div><span class="live-chip"><i></i><span data-i18n="liveStatus">LIVE</span></span></div>
+              <p class="view-intro" data-i18n="smartSafetyIntro">Review local weather, river levels and safety notices in one place.</p>
+              <article class="weather-card">
+                <div class="weather-main"><span class="weather-icon" aria-hidden="true">🌦️</span><div><strong>29°</strong><span data-i18n="partlyCloudy">Partly cloudy</span></div></div>
+                <div class="weather-meta"><b>↗ 18 km/h</b><span data-i18n="windNorthEast">Wind · NE</span><small data-i18n="humidity">Humidity 78%</small></div>
+              </article>
+              <section class="forecast-card" aria-labelledby="forecastTitle">
+                <div class="section-heading forecast-heading"><div><p class="eyebrow" data-i18n="localForecast">LOCAL FORECAST</p><h2 id="forecastTitle" data-i18n="rainForecast">Rainfall outlook</h2></div></div>
+                <div class="forecast-switch" role="tablist" aria-label="Forecast period"><button class="forecast-tab active" type="button" data-forecast="24" aria-selected="true" data-i18n="next24">Next 24 hours</button><button class="forecast-tab" type="button" data-forecast="72" aria-selected="false" data-i18n="next72">Next 72 hours</button></div>
+                <div class="forecast-stats"><div><small data-i18n="rainfall">Rainfall</small><strong id="rainfallValue">18 <small>mm</small></strong><span data-i18n="estimated">Estimated total</span></div><div><small data-i18n="temperature">Temperature</small><strong>29° <small>C</small></strong><span data-i18n="partlyCloudy">Partly cloudy</span></div><div><small data-i18n="wind">Wind</small><strong>18 <small>km/h</small></strong><span data-i18n="windNorthEast">Wind · NE</span></div></div>
+                <div class="rain-bars" id="rainBars" aria-label="Rainfall forecast chart"><i style="height:25%"></i><i style="height:48%"></i><i style="height:32%"></i><i style="height:75%"></i><i style="height:55%"></i><i style="height:28%"></i></div>
+              </section>
+              <div class="section-heading home-river-heading"><h2 data-i18n="riverLevels">River water levels</h2><button class="text-button" data-nav="map" type="button" data-i18n="openMap">Open map ↗</button></div>
+              <div class="gauge-grid large-gauges"><article class="gauge-card"><div><span class="gauge-icon blue-bg">≈</span><small id="homeRiverName">Kelani River · Gauge 03</small></div><strong id="homeRiverLevel">3.6 <small>m</small></strong><span class="trend rising">↗ <span data-i18n="risingTrend">Rising · 0.4 m in 2h</span></span><div class="meter"><i style="width:76%"></i></div><small data-i18n="watchLevel">Watch level · 4.0 m</small></article><article class="gauge-card"><div><span class="gauge-icon teal-bg">≈</span><small id="homeRiverName2">Attanagalu Oya · Gauge 07</small></div><strong id="homeRiverLevel2">2.1 <small>m</small></strong><span class="trend steady">→ <span data-i18n="stableTrend">Stable · below alert</span></span><div class="meter safe-meter"><i style="width:34%"></i></div><small data-i18n="watchLevel2">Watch level · 3.2 m</small></article></div>
+              <div class="alert-banner" role="status"><span class="alert-glyph">!</span><div><span class="illustrative-badge" data-i18n="sampleData">ILLUSTRATIVE DATA</span><strong data-i18n="rainWatch">Heavy rain watch · Western Province</strong><span data-i18n="rainUntil">Showers possible through 8:00 PM</span></div><button class="dismiss-alert" id="dismissAlert" type="button" aria-label="Dismiss alert">×</button></div>
+              <div class="risk-pair"><button class="risk-tile" data-nav="alerts" type="button"><span data-i18n="floodRisk">Flood risk</span><strong id="floodRiskValue" class="risk-watch" data-i18n="watch">Watch</strong><small data-i18n="tapForAlerts">View alerts ↗</small></button><button class="risk-tile" data-nav="alerts" type="button"><span data-i18n="landslideRisk">Landslide risk</span><strong id="landslideRiskValue" class="risk-low" data-i18n="low">Low</strong><small data-i18n="tapForAlerts">View alerts ↗</small></button></div>
+              <div class="signal-grid"><div><span>●</span><small data-i18n="dataHealth">Data status</small><b data-i18n="previewMode">Preview mode</b></div><div><span>⌖</span><small data-i18n="selectedArea">Selected area</small><b id="selectedAreaValue" data-i18n="colombo">Colombo</b></div></div>            </section>
+            <div class="section-heading"><h2 data-i18n="quickActions">Quick actions</h2><button class="text-button" data-nav="more" data-scroll-to="toolsHeading" type="button" data-i18n="allTools">All tools</button></div>
+            <div class="quick-grid">
+              <button class="quick-action" data-action="report"><span class="action-icon blue-bg">⚑</span><b data-i18n="reportHazard">Weather report</b></button>
+              <button class="quick-action" data-action="shelters"><span class="action-icon green-bg">⌂</span><b data-i18n="findShelter">Find shelter</b></button>
+              <button class="quick-action" data-action="safe"><span class="action-icon red-bg">♡</span><b data-i18n="familySafe">Notify family: I'm safe</b></button>
+              <button class="quick-action" data-action="guide" type="button"><span class="action-icon teal-bg">▤</span><b data-i18n="safetyGuide">Safety guide</b></button>
+              <button class="quick-action" data-action="contacts" type="button"><span class="action-icon amber-bg">☎</span><b data-i18n="emergencyContacts">Emergency calls</b></button>
+              <button class="quick-action" data-nav="alerts" type="button"><span class="action-icon red-bg">🌊</span><b data-i18n="alerts">Alerts</b></button>
+            </div>
+            <div class="section-heading"><h2 data-i18n="audioBriefings">Audio briefings</h2></div>
+            <div id="audioCards" class="audio-list"></div>
+            <div class="sos-panel"><div><strong data-i18n="urgentHelp">Need urgent help?</strong><small data-i18n="holdSos">Press and hold SOS for 1 second</small></div><button class="sos-button" id="sosButton" type="button" aria-label="Press and hold for emergency SOS">SOS</button></div>
+            <button class="offline-fallback" data-action="offlineSos" type="button"><span aria-hidden="true">☎</span><span data-i18n="offlineMissedCall">DMC 117 · Request help with a missed call</span><span aria-hidden="true">›</span></button>          </section>
+
+          <section class="view" id="map" aria-labelledby="mapTitle">
+            <div class="view-title"><div><p class="eyebrow" data-i18n="districtWatch">DISTRICT WATCH</p><h1 id="mapTitle" data-i18n="riskMap">Live risk map</h1></div><button class="icon-button header-icon-button layer-button" id="layerToggle" aria-label="Toggle map layers"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5M3 16l9 5 9-5"></path></svg></button></div>
+            <p class="view-intro" data-i18n="mapIntro">Community alerts and river gauge readings across your district.</p>
+            <div class="map-filter-row" role="group" aria-label="Map overlays"><button class="map-filter active" data-map-filter="all" type="button" aria-pressed="true" data-i18n="filterAll">All</button><button class="map-filter" data-map-filter="flood" type="button" aria-pressed="false" data-i18n="flooding">Flooding</button><button class="map-filter" data-map-filter="landslide" type="button" aria-pressed="false" data-i18n="landslide">Landslide</button><button class="map-filter" data-map-filter="reports" type="button" aria-pressed="false" data-i18n="reportsFilter">Reports</button><button class="map-filter" data-map-filter="shelters" type="button" aria-pressed="false" data-i18n="safePlacesFilter">Safe places</button></div>
+            <p id="mapFilterStatus" class="form-note map-filter-status" aria-live="polite" data-i18n="mapAllActive">Showing all preview map layers.</p>
+            <div class="map-card full-map-card"><div class="map-visual full-map-visual leaflet-map-host" id="fullMap" role="application" aria-label="Interactive flood and landslide risk map"><div class="map-legend leaflet-map-legend"><span><i class="dot red-dot"></i><span data-i18n="highRisk">High risk</span></span><span><i class="dot amber-dot"></i><span data-i18n="watchRisk">Watch</span></span><span><i class="dot blue-dot"></i><span data-i18n="riverGauge">River gauge</span></span></div></div><div class="map-summary"><div><b id="mapAreaName" data-i18n="kelaniBasin">Colombo & Kelani Basin</b><small data-i18n="sync4min">Last synced 4 min ago</small></div></div></div>
+          </section>
+
+          <section class="view" id="alerts" aria-labelledby="alertsTitle">
+            <div class="view-title"><div><p class="eyebrow" data-i18n="safetySignals">SAFETY SIGNALS</p><h1 id="alertsTitle" data-i18n="alerts">Alerts</h1></div><button class="text-button" id="refreshAlerts" type="button" data-i18n="refresh">Refresh</button></div>
+            <p class="view-intro" data-i18n="alertsIntro">Review local hazard notices and forecast summaries.</p>
+            <div class="alert-summary-grid"><article><span class="action-icon red-bg">🌊</span><div><b>2</b><small data-i18n="floodWatch">Flood watch</small></div></article><article><span class="action-icon amber-bg">⛰</span><div><b>1</b><small data-i18n="landslideWatch">Landslide watch</small></div></article></div>
+            <div class="tabs" role="tablist"><button class="tab active" data-alert-tab="official" role="tab" aria-selected="true" type="button" data-i18n="notices">Notices</button><button class="tab" data-alert-tab="forecast" role="tab" aria-selected="false" type="button" data-i18n="forecasts">Forecasts</button></div>
+            <div id="alert-panel-official" class="alert-tab-panel active"><div class="section-heading"><h2 data-i18n="recentAlerts">Recent alerts</h2><span class="illustrative-badge" data-i18n="previewData">ILLUSTRATIVE DATA</span></div><div id="officialAlertList" class="stack-list"></div></div>
+            <div id="alert-panel-forecast" class="alert-tab-panel"><div class="section-heading"><h2 data-i18n="forecastOutlook">Forecast outlook</h2></div><div id="forecastAlertList" class="stack-list"></div><div class="info-card amber-info"><strong data-i18n="forecastCaution">For actual warnings, follow official notices.</strong><span data-i18n="forecastCautionSub">This preview does not monitor live conditions.</span></div></div>
+            <div class="info-card blue-info"><strong data-i18n="officialSafetyFirst">Safety first</strong><span data-i18n="officialSafetySub">Use official Disaster Management Centre and weather service instructions during real emergencies.</span></div>
+          </section>
+
+          <section class="view" id="community" aria-labelledby="communityTitle">
+            <div class="view-title"><div><p class="eyebrow" data-i18n="togetherSafer">TOGETHER, SAFER</p><h1 id="communityTitle" data-i18n="community">Community</h1></div><button class="primary-button small-button" data-action="report" type="button">＋ <span data-i18n="submitReport">Submit report</span></button></div>
+            <p class="view-intro" data-i18n="communityIntro">Share local hazards and check verified community updates.</p>
+            <div class="tabs" role="tablist"><button class="tab active" data-tab="updates" role="tab" aria-selected="true" type="button" data-i18n="updates">Updates</button><button class="tab" data-tab="announcements" role="tab" aria-selected="false" type="button" data-i18n="announcements">Announcements</button><button class="tab" data-tab="archive" role="tab" aria-selected="false" type="button" data-i18n="archive">Archive</button></div>
+            <div class="tab-panel active" id="tab-updates"><div class="community-filter-row"><label for="communityDate" data-i18n="filterDate">Date</label><input id="communityDate" type="date"><label for="reportCategory" data-i18n="filterType">Type</label><select id="reportCategory" class="select-control"><option value="all" data-i18n="filterAll">All</option><option value="Flooding" data-i18n="flooding">Flooding</option><option value="Landslide" data-i18n="landslide">Landslide</option><option value="Fallen tree" data-i18n="fallenTree">Fallen tree</option><option value="Damaged infrastructure" data-i18n="infrastructure">Damaged infrastructure</option><option value="Other" data-i18n="other">Other</option></select></div><div class="section-heading"><div><h2 data-i18n="nearbyReports">Nearby reports</h2><p class="report-count-line"><span data-i18n="myReports">My reports</span> · <b id="myReportsCount">0</b></p></div></div><div id="communityReports" class="stack-list"></div></div>
+            <div class="tab-panel" id="tab-announcements"><div class="section-heading"><h2 data-i18n="verifiedAnnouncements">Example notices</h2><span class="illustrative-badge" data-i18n="sampleData">ILLUSTRATIVE DATA</span></div><div id="announcementList" class="stack-list"></div></div>
+            <div class="tab-panel" id="tab-archive"><div class="section-heading"><h2 data-i18n="disasterArchive">Disaster archive</h2></div><div class="filter-row archive-filters"><label class="visually-hidden" for="archiveDistrict" data-i18n="selectDistrict">Select district</label><select id="archiveDistrict" class="select-control"><option value="Colombo">Colombo</option><option value="Gampaha">Gampaha</option><option value="Kalutara">Kalutara</option><option value="Kandy">Kandy</option><option value="Matale">Matale</option><option value="Nuwara Eliya">Nuwara Eliya</option><option value="Galle">Galle</option><option value="Matara">Matara</option><option value="Hambantota">Hambantota</option><option value="Jaffna">Jaffna</option><option value="Kilinochchi">Kilinochchi</option><option value="Mannar">Mannar</option><option value="Mullaitivu">Mullaitivu</option><option value="Vavuniya">Vavuniya</option><option value="Trincomalee">Trincomalee</option><option value="Batticaloa">Batticaloa</option><option value="Ampara">Ampara</option><option value="Kurunegala">Kurunegala</option><option value="Puttalam">Puttalam</option><option value="Anuradhapura">Anuradhapura</option><option value="Polonnaruwa">Polonnaruwa</option><option value="Badulla">Badulla</option><option value="Monaragala">Monaragala</option><option value="Ratnapura">Ratnapura</option><option value="Kegalle">Kegalle</option></select><label class="visually-hidden" for="archiveYear" data-i18n="selectYear">Select year</label><select id="archiveYear" class="select-control"><option value="all" data-i18n="allYears">All years</option><option>2025</option><option>2024</option><option>2023</option></select></div><div id="archiveList" class="stack-list"></div></div>
+          </section>
+
+          <section class="view" id="shelters" aria-labelledby="sheltersTitle">
+            <div class="view-title"><div><p class="eyebrow" data-i18n="safeCenters">SAFE CENTERS</p><h1 id="sheltersTitle" data-i18n="nearbyShelters">Nearby safe centers</h1></div></div>
+            <p class="view-intro" data-i18n="sheltersSub">Open locations and reported capacity</p><div id="safeCenterList" class="stack-list"></div>
+          </section>
+
+          <section class="view" id="more" aria-labelledby="moreTitle">
+            <div class="view-title"><div><p class="eyebrow" data-i18n="personalize">PERSONALIZE</p><h1 id="moreTitle" data-i18n="settingsProfile">Settings & profile</h1></div></div>
+            <article class="profile-card"><span class="avatar" id="profileAvatar">G</span><div class="profile-copy"><strong id="profileName" data-i18n="guestCitizen">Guest citizen</strong><small id="profileInfo" data-i18n="guestMode">Guest mode · No account required</small></div><button class="secondary-button small-button" id="editProfileButton" type="button" data-i18n="editProfile">Edit profile</button></article>
+            <article class="verification-card" id="verificationSummary" hidden aria-live="polite"><div class="verification-card-head"><div><strong>Account Verification</strong><small>ගිණුම් සත්‍යාපන තත්ත්වය</small></div><span class="verified-badge"><span aria-hidden="true">✓</span> VERIFIED</span></div><p class="verification-demo-note">DEMO VERIFIED · Sample account for competition presentation</p><div class="verification-status-grid"><div><span>NIC / ජාතික හැඳුනුම්පත</span><b>✓ Verified</b></div><div><span>GN Division / ග්‍රාම නිලධාරී වසම</span><b>✓ Verified</b></div><div><span>Gender / ස්ත්‍රී පුරුෂභාවය</span><b>✓ Confirmed</b></div><div><span>Phone / දුරකථනය</span><b>✓ Demo verified</b></div></div><small class="verification-footnote">මෙය Demo තත්ත්වයකි. සැබෑ පුද්ගල අනන්‍යතාව රජයේ දත්ත පද්ධතියකින් තහවුරු කර නැත.</small></article>
+            <div class="account-quick-actions"><button class="secondary-button small-button" id="signInButton" type="button" data-i18n="signIn">Sign in</button><button class="secondary-button small-button" id="setupButton" type="button" data-i18n="setupPreferences">Setup preferences</button><button class="secondary-button small-button" id="enableNotifications" type="button" data-i18n="enableNotifications">Enable notifications</button></div>
+            <div class="info-card blue-info"><strong data-i18n="locationPrivacyTitle">Location privacy</strong><span data-i18n="locationPrivacyText">Your location is requested only after you press the location button. It is not sent to a server. If you choose to include a location in a report, that report stays in this browser.</span></div>
+            <div class="settings-card">
+              <div class="setting-row"><div><b data-i18n="language">Language</b><small data-i18n="languageDescription">Choose your preferred language</small></div><label class="visually-hidden" for="languageSelect" data-i18n="language">Language</label><select id="languageSelect" class="select-control compact-select"><option value="en">English</option><option value="si">සිංහල</option><option value="ta">தமிழ்</option></select></div>
+              <div class="setting-row"><div><b data-i18n="darkMode">Dark appearance</b><small data-i18n="darkDescription">Comfortable viewing at night</small></div><button class="switch" id="darkSwitch" role="switch" aria-checked="false" type="button" aria-label="Dark appearance"></button></div>
+              <div class="setting-row"><div><b data-i18n="textSize">Text size</b><small data-i18n="textSizeDescription">Adjust for easier reading</small></div><span class="stepper"><button id="fontDown" type="button" aria-label="Decrease text size">A−</button><output id="fontOutput">100%</output><button id="fontUp" type="button" aria-label="Increase text size">A+</button></span></div>
+              <div class="setting-row"><div><b data-i18n="highContrast">High contrast</b><small data-i18n="contrastDescription">Increase text and border contrast</small></div><button class="switch" id="contrastSwitch" role="switch" aria-checked="false" type="button" aria-label="High contrast"></button></div>
+              <div class="setting-row"><div><b data-i18n="reduceMotion">Reduce motion</b><small data-i18n="motionDescription">Limit animation and transitions</small></div><button class="switch" id="motionSwitch" role="switch" aria-checked="false" type="button" aria-label="Reduce motion"></button></div>
+              <div class="setting-row"><div><b data-i18n="lowDataMode">Low data mode</b><small data-i18n="lowDataDescription">Use a lighter map and text-first view</small></div><button class="switch" id="lowDataSwitch" role="switch" aria-checked="false" type="button" aria-label="Low data mode"></button></div>
+            </div>
+            <div class="section-heading illustrative-tools-heading" id="toolsHeading"><h2 data-i18n="illustrativeTools">Tools</h2></div>
+            <div class="tool-grid"><button class="tool-button" data-action="family"><span>👪</span><b data-i18n="manageFamily">Add family members</b></button><button class="tool-button" data-action="report"><span>⚑</span><b data-i18n="toolReportHazard">Report hazard</b></button><button class="tool-button" data-action="shelters"><span>⌂</span><b data-i18n="findShelter">Find shelter</b></button><button class="tool-button" data-action="safe"><span>♡</span><b data-i18n="familySafe">Notify family: I'm safe</b></button><button class="tool-button" data-action="guide"><span>▤</span><b data-i18n="safetyGuide">Safety guide</b></button><button class="tool-button" data-action="contacts"><span>☎</span><b data-i18n="emergencyContacts">Emergency calls</b></button><button class="tool-button" data-nav="alerts"><span>!</span><b data-i18n="alerts">Alerts</b></button><button class="tool-button" data-action="admin"><span>🛡</span><b data-i18n="adminReview">Admin review</b></button><button class="tool-button" data-action="dataRequest"><span>✉</span><b data-i18n="requestData">Request data</b></button><button class="tool-button" data-action="register"><span>🪪</span><b data-i18n="createAccount">Create account</b></button><button class="tool-button" data-action="refresh"><span>↻</span><b data-i18n="refreshillustrative">Refresh information</b></button></div>
+            <div class="section-heading"><h2 data-i18n="privacyControls">Privacy controls</h2></div>
+            <div class="info-card blue-info"><strong data-i18n="privacySummary">Location is not collected automatically.</strong><span data-i18n="privacyDescription">Settings and reports stay in this browser only. No SOS, SMS or uploads are sent.</span></div>
+            <button class="secondary-button small-button" id="clearDemoData" type="button" data-i18n="clearDemoData">Clear saved information from this browser</button>
+            <button class="secondary-button small-button" data-action="guide" type="button"><span data-i18n="offlineGuide">Open offline safety guide</span> ↗</button>
+            <p class="disclaimer settings-disclaimer" data-i18n="illustrativeDisclaimer">Illustrative information only · Alerts, readings and actions are not live or connected to emergency services.</p>
+          </section>
+        </main>
+
+        <nav class="bottom-nav" aria-label="Main navigation">
+          <button class="nav-item active" data-nav="home" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1V10Z"></path></svg></span><small data-i18n="home">Home</small></button>
+          <button class="nav-item" data-nav="map" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"></path><path d="M9 3v15m6-12v15"></path></svg></span><small data-i18n="map">Map</small></button>
+          <button class="nav-item" data-nav="shelters" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10 12 3l9 7v10h-6v-6H9v6H3z"></path></svg></span><small data-i18n="safeCenters">Safe centers</small></button>
+          <button class="nav-item" data-nav="more" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"></circle><circle cx="12" cy="12" r="1.4"></circle><circle cx="19" cy="12" r="1.4"></circle></svg></span><small data-i18n="more">More</small></button>
+        </nav>
+        <div class="home-indicator" aria-hidden="true"></div>
+        <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+        <div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-handle"></div><header class="modal-header"><h2 id="modalTitle"></h2><button class="icon-button modal-close" id="modalClose" type="button" aria-label="Close dialog">×</button></header><div id="modalBody"></div></section></div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="map.js" defer></script>
+</body>
+</html>
